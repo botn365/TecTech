@@ -555,7 +555,7 @@ public abstract class GT_MetaTileEntity_MultiblockBase_EM extends GT_MetaTileEnt
                 }
             }
             cleanOutputEM_EM();
-            if (ePowerPass && getEUVar() > V[3] || eDismantleBoom && mMaxProgresstime > 0 && areChunksAroundLoaded_EM()) {
+            if ((eDismantleBoom && mMaxProgresstime > 0 && areChunksAroundLoaded_EM())) {
                 explodeMultiblock();
             }
         } catch (Exception e) {
@@ -1446,7 +1446,7 @@ public abstract class GT_MetaTileEntity_MultiblockBase_EM extends GT_MetaTileEnt
                                     if (GT_MetaTileEntity_MultiBlockBase.isValidMetaTileEntity(tHatch)) {
                                         euVar = tHatch.maxEUOutput() * tHatch.Amperes;
                                         if (tHatch.getBaseMetaTileEntity().getStoredEU() <= tHatch.maxEUStore() - euVar &&
-                                                aBaseMetaTileEntity.decreaseStoredEnergyUnits(euVar + Math.max(euVar >> 7, tHatch.Amperes), false)) {
+                                                aBaseMetaTileEntity.decreaseStoredEnergyUnits(euVar, false)) {
                                             tHatch.setEUVar(tHatch.getBaseMetaTileEntity().getStoredEU() + euVar);
                                         }
                                     }
