@@ -569,7 +569,6 @@ public class GT_MetaTileEntity_TM_teslaCoil extends GT_MetaTileEntity_Multiblock
         }
 
         ePowerPass = false;
-        setEUVar(0);
         energyStoredDisplay.set(0);
         energyFractionDisplay.set(0);
     }
@@ -643,6 +642,7 @@ public class GT_MetaTileEntity_TM_teslaCoil extends GT_MetaTileEntity_Multiblock
         IMetaTileEntity orginInside = orgin.getMetaTileEntity();
         //Assumes that if the orgin is not a Tesla Tower, it mus be a single block.
         boolean isMulti = orginInside instanceof GT_MetaTileEntity_TM_teslaCoil;
+        ArrayList<IGregTechTileEntity> removeList = new ArrayList<>(nodeMap.size());
 
         for (Map.Entry<IGregTechTileEntity, Integer> Rx : nodeMap.entrySet()) {
             //All the checks need to pass or the target gets removed from the transmission list
@@ -680,7 +680,10 @@ public class GT_MetaTileEntity_TM_teslaCoil extends GT_MetaTileEntity_Multiblock
                 } catch (Exception ignored) {
                 }
             }
-            nodeMap.remove(Rx.getKey());
+            removeList.add(Rx.getKey());
+        }
+        for (IGregTechTileEntity node : removeList) {
+            nodeMap.remove(node);
         }
     }
 
@@ -817,10 +820,10 @@ public class GT_MetaTileEntity_TM_teslaCoil extends GT_MetaTileEntity_Multiblock
         return energyCapacity * 2;
     }
 
-    @Override
-    public long getEUVar() {
-        return getBaseMetaTileEntity().isActive() ? super.getEUVar() : 0;
-    }
+//    @Override
+//    public long getEUVar() {
+//        return getBaseMetaTileEntity().isActive() ? super.getEUVar() : 0;
+//    }
 
     private boolean addCapacitorToMachineList(IGregTechTileEntity aTileEntity, int aBaseCasingIndex) {
         if (aTileEntity == null) {
